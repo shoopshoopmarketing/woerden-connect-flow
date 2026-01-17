@@ -1,7 +1,8 @@
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, X, LogIn, LogOut, Settings } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/hooks/useAuth';
 import logo from '@/assets/logo-raad-van-kerken.png';
 
 const navItems = [
@@ -15,6 +16,14 @@ const navItems = [
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, isAdmin, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
+    setIsMenuOpen(false);
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border">
@@ -53,6 +62,34 @@ export function Header() {
                 Activiteit aanmelden
               </Button>
             </Link>
+            
+            {/* Auth buttons */}
+            {user ? (
+              <div className="flex items-center gap-2 ml-2">
+                {isAdmin && (
+                  <Link to="/beheer">
+                    <Button size="sm" variant="ghost" className="text-muted-foreground">
+                      <Settings className="w-4 h-4" />
+                    </Button>
+                  </Link>
+                )}
+                <Button 
+                  size="sm" 
+                  variant="ghost" 
+                  onClick={handleSignOut}
+                  className="text-muted-foreground"
+                >
+                  <LogOut className="w-4 h-4" />
+                </Button>
+              </div>
+            ) : (
+              <Link to="/auth" className="ml-2">
+                <Button size="sm" variant="ghost" className="text-muted-foreground">
+                  <LogIn className="w-4 h-4 mr-1" />
+                  <span className="hidden lg:inline">Inloggen</span>
+                </Button>
+              </Link>
+            )}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -96,6 +133,35 @@ export function Header() {
                   Activiteit aanmelden
                 </Button>
               </Link>
+              
+              {/* Mobile auth */}
+              {user ? (
+                <div className="flex gap-2 mt-2">
+                  {isAdmin && (
+                    <Link to="/beheer" onClick={() => setIsMenuOpen(false)} className="flex-1">
+                      <Button variant="secondary" className="w-full">
+                        <Settings className="w-4 h-4 mr-2" />
+                        Beheer
+                      </Button>
+                    </Link>
+                  )}
+                  <Button 
+                    variant="ghost" 
+                    onClick={handleSignOut}
+                    className="flex-1"
+                  >
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Uitloggen
+                  </Button>
+                </div>
+              ) : (
+                <Link to="/auth" onClick={() => setIsMenuOpen(false)} className="mt-2">
+                  <Button variant="secondary" className="w-full">
+                    <LogIn className="w-4 h-4 mr-2" />
+                    Inloggen
+                  </Button>
+                </Link>
+              )}
             </div>
           </nav>
         )}

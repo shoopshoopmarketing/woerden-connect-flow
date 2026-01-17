@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import { Heart } from 'lucide-react';
+import { Heart, Phone } from 'lucide-react';
 
 export function Footer() {
   return (
     <footer className="bg-card border-t border-border mt-auto">
       <div className="container-page py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* About */}
           <div>
             <h3 className="font-serif text-lg font-medium text-foreground mb-3">
@@ -49,6 +49,28 @@ export function Footer() {
             </ul>
           </div>
 
+          {/* Hulp nodig */}
+          <div>
+            <h4 className="font-medium text-foreground mb-3">Hulp nodig?</h4>
+            <div className="bg-sage-light rounded-lg p-4">
+              <div className="flex items-start gap-3">
+                <Phone className="w-5 h-5 text-sage mt-0.5" />
+                <div>
+                  <p className="text-sm font-medium text-foreground">Diaconale hulplijn</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Zit je in een moeilijke situatie? De diaconie kan helpen.
+                  </p>
+                  <a 
+                    href="mailto:commissiediaconie@gmail.com"
+                    className="text-sm text-primary hover:underline mt-2 inline-block"
+                  >
+                    commissiediaconie@gmail.com
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Contact */}
           <div>
             <h4 className="font-medium text-foreground mb-3">Contact</h4>
@@ -63,6 +85,11 @@ export function Footer() {
             >
               www.kerkeninwoerden.nl
             </a>
+            <div className="mt-4">
+              <Link to="/auth" className="text-xs text-muted-foreground hover:text-primary transition-colors">
+                Inloggen voor beheerders
+              </Link>
+            </div>
           </div>
         </div>
 

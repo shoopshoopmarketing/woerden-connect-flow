@@ -1,6 +1,7 @@
 import { Layout } from '@/components/layout';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Church } from 'lucide-react';
 import logo from '@/assets/logo-raad-van-kerken.png';
+import { organizations } from '@/data/organizations';
 
 export default function About() {
   return (
@@ -18,9 +19,19 @@ export default function About() {
           </div>
 
           <div className="prose prose-lg max-w-none space-y-6">
-            <p className="text-foreground leading-relaxed">
+            <p className="text-foreground leading-relaxed text-lg">
               Dit platform brengt activiteiten op het gebied van geloof, zingeving, cultuur en ontmoeting in Woerden samen. Zo maken we zichtbaar wat er allemaal te doen is in onze stad.
             </p>
+            
+            <div className="bg-primary/10 rounded-xl p-6 my-8 border-l-4 border-primary">
+              <p className="text-foreground font-medium text-lg italic">
+                "Er zijn voor iedereen in Woerden en omgeving"
+              </p>
+              <p className="text-muted-foreground mt-2">
+                – Missie Raad van Kerken Woerden
+              </p>
+            </div>
+
             <p className="text-foreground leading-relaxed">
               De Raad van Kerken Woerden is een samenwerkingsverband van kerken in Woerden, Harmelen, Kamerik, Kanis en Zegveld. Wij willen het christelijk geloof op een laagdrempelige en dienende manier zichtbaar maken in onze samenleving.
             </p>
@@ -43,9 +54,37 @@ export default function About() {
               </ul>
             </div>
 
-            <p className="text-foreground leading-relaxed">
+            <p className="text-foreground leading-relaxed text-lg font-medium">
               Iedereen is welkom. Of je nu christen bent of niet, jong of oud, nieuw in Woerden of al jaren inwoner – dit platform is er voor jou.
             </p>
+          </div>
+
+          {/* Participating churches */}
+          <div className="mt-12 pt-8 border-t border-border">
+            <h2 className="font-serif text-2xl font-medium text-foreground mb-6 flex items-center gap-3">
+              <Church className="w-6 h-6 text-primary" />
+              Deelnemende kerken
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {organizations.filter(org => org.id !== 'rvk').map(org => (
+                <div key={org.id} className="bg-card border border-border rounded-lg p-4">
+                  <p className="font-medium text-foreground">{org.name}</p>
+                  {org.description && (
+                    <p className="text-sm text-muted-foreground mt-1">{org.description}</p>
+                  )}
+                  {org.website && (
+                    <a 
+                      href={org.website} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-sm text-primary hover:underline mt-2 inline-flex items-center gap-1"
+                    >
+                      Website <ExternalLink className="w-3 h-3" />
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="mt-8 pt-8 border-t border-border">

@@ -4,10 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Layout } from '@/components/layout';
 import { ActivityCard } from '@/components/ActivityCard';
 import { ThemeBlock } from '@/components/ThemeBlock';
-import { getFeaturedActivities } from '@/data/activities';
+import { getUpcomingActivities } from '@/data/activities';
 
 export default function Home() {
-  const featuredActivities = getFeaturedActivities();
+  const upcomingActivities = getUpcomingActivities(12);
 
   return (
     <Layout>
@@ -67,15 +67,15 @@ export default function Home() {
         <div className="container-page">
           <div className="flex items-center justify-between mb-8">
             <h2 className="font-serif text-2xl sm:text-3xl font-medium text-foreground">
-              Uitgelichte activiteiten
+              Binnenkort in Woerden
             </h2>
             <Link to="/activiteiten" className="text-primary hover:underline text-sm font-medium flex items-center gap-1">
               Bekijk alles <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredActivities.map(activity => (
-              <ActivityCard key={activity.id} activity={activity} featured />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {upcomingActivities.map(activity => (
+              <ActivityCard key={activity.id} activity={activity} />
             ))}
           </div>
         </div>

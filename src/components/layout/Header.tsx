@@ -8,6 +8,7 @@ import logo from '@/assets/logo-raad-van-kerken.png';
 const navItems = [
   { label: 'Home', path: '/' },
   { label: 'Activiteiten', path: '/activiteiten' },
+  { label: 'Kerken', path: '/kerken' },
   { label: 'Nieuws', path: '/nieuws' },
   { label: 'Over ons', path: '/over' },
   { label: 'Contact', path: '/contact' },

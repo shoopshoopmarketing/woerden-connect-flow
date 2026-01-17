@@ -8,12 +8,39 @@ export type ActivityType =
   | 'ontmoeting'
   | 'viering';
 
+export type Denomination = 
+  | 'rooms-katholiek'
+  | 'protestant-hervormd'
+  | 'gereformeerd'
+  | 'evangelisch'
+  | 'luthers'
+  | 'nieuw-apostolisch'
+  | 'oecumenisch';
+
+export type ChurchSize = 'klein' | 'middelgroot' | 'groot';
+
+export type ServiceStyle = 'traditioneel' | 'modern' | 'gemengd';
+
 export interface Organization {
   id: string;
   name: string;
   shortName?: string;
   website?: string;
   description?: string;
+  // Kerkwijzer velden
+  denomination?: Denomination;
+  size?: ChurchSize;
+  serviceStyle?: ServiceStyle;
+  neighborhood?: string;
+  address?: string;
+  hasChildcare?: boolean;
+  hasYouthGroup?: boolean;
+  hasAccessibility?: boolean;
+  hasParkingAvailable?: boolean;
+  hasRingloop?: boolean;
+  serviceTime?: string;
+  image?: string;
+  longDescription?: string;
 }
 
 export interface Activity {
@@ -35,6 +62,9 @@ export interface Activity {
   isFeatured?: boolean;
   isRecurring?: boolean;
   recurringInfo?: string;
+  // Terugblik velden
+  retrospective?: string;
+  retrospectiveImages?: string[];
 }
 
 export interface NewsItem {
@@ -67,6 +97,13 @@ export interface ActivitySubmission {
   location?: string;
 }
 
+export interface ActivityRegistration {
+  activityId: string;
+  name: string;
+  email: string;
+  numberOfPeople?: number;
+}
+
 export const activityTypeLabels: Record<ActivityType, string> = {
   kerkdienst: 'Kerkdienst',
   lezing: 'Lezing',
@@ -87,4 +124,26 @@ export const activityTypeColors: Record<ActivityType, string> = {
   gebed: 'bg-purple-light text-purple',
   ontmoeting: 'bg-terracotta-light text-primary',
   viering: 'bg-secondary text-secondary-foreground',
+};
+
+export const denominationLabels: Record<Denomination, string> = {
+  'rooms-katholiek': 'Rooms-Katholiek',
+  'protestant-hervormd': 'Protestant / Hervormd',
+  'gereformeerd': 'Gereformeerd',
+  'evangelisch': 'Evangelisch',
+  'luthers': 'Luthers',
+  'nieuw-apostolisch': 'Nieuw-Apostolisch',
+  'oecumenisch': 'Oecumenisch',
+};
+
+export const sizeLabels: Record<ChurchSize, string> = {
+  klein: 'Klein (< 100 leden)',
+  middelgroot: 'Middelgroot (100-300 leden)',
+  groot: 'Groot (> 300 leden)',
+};
+
+export const styleLabels: Record<ServiceStyle, string> = {
+  traditioneel: 'Traditioneel',
+  modern: 'Modern',
+  gemengd: 'Gemengd',
 };

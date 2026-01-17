@@ -66,6 +66,17 @@ export default function ActivityDetail() {
                 {activity.address && <p className="text-sm text-muted-foreground">{activity.address}</p>}
               </div>
             </div>
+            
+            {/* Registration Button */}
+            <div className="pt-4 border-t border-border">
+              <Button className="w-full gap-2" size="lg">
+                <Users className="w-5 h-5" />
+                Ik kom!
+              </Button>
+              <p className="text-xs text-muted-foreground text-center mt-2">
+                Meld je aan zodat de organisator weet hoeveel mensen er komen
+              </p>
+            </div>
           </div>
 
           {/* Description */}

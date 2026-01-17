@@ -1,5 +1,16 @@
 import { Organization } from './types';
 
+// Church images
+import camaImage from '@/assets/churches/cama-parousia.jpg';
+import rehobothImage from '@/assets/churches/rehobothkerk.jpg';
+import gkWoerdenImage from '@/assets/churches/gk-woerden.jpg';
+import paxChristiImage from '@/assets/churches/pax-christi.jpg';
+import lutherseImage from '@/assets/churches/lutherse-gemeente.jpg';
+import hervnwImage from '@/assets/churches/hervormd-nw.jpg';
+import petruskerkImage from '@/assets/churches/petruskerk.jpg';
+import hetBakenImage from '@/assets/churches/het-baken.jpg';
+import nakImage from '@/assets/churches/nak-woerden.jpg';
+
 export const organizations: Organization[] = [
   {
     id: 'rvk',
@@ -27,7 +38,7 @@ export const organizations: Organization[] = [
     hasParkingAvailable: true,
     hasRingloop: false,
     serviceTime: 'Zondag 10:00',
-    image: 'https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=800&h=600&fit=crop',
+    image: camaImage,
     longDescription: 'Cama Parousia is een levendige, eigentijdse gemeente waar jong en oud welkom zijn. Onze diensten worden gekenmerkt door moderne muziek, praktische preken en een warme gemeenschap. We geloven in een persoonlijke relatie met God en met elkaar. Naast de zondagsdienst zijn er doordeweeks diverse kringen en activiteiten.',
   },
   {
@@ -47,7 +58,7 @@ export const organizations: Organization[] = [
     hasParkingAvailable: true,
     hasRingloop: true,
     serviceTime: 'Zondag 09:30 en 16:30',
-    image: 'https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=800&h=600&fit=crop',
+    image: rehobothImage,
     longDescription: 'De Rehobothkerk is een warme, betrokken gemeente waar de Bijbel centraal staat. We hechten waarde aan onze gereformeerde traditie, maar staan open voor vernieuwing. Er is veel aandacht voor onderlinge zorg en gemeenschapsopbouw. Onze jeugdgroepen zijn actief en er is altijd ruimte voor nieuwe gezichten.',
   },
   {
@@ -67,7 +78,7 @@ export const organizations: Organization[] = [
     hasParkingAvailable: false,
     hasRingloop: true,
     serviceTime: 'Zondag 10:00',
-    image: 'https://images.unsplash.com/photo-1510070112810-d4e9a46d9e91?w=800&h=600&fit=crop',
+    image: gkWoerdenImage,
     longDescription: 'De Gereformeerde Kerk Woerden en Zegveld is een actieve gemeente met een rijke geschiedenis. We combineren traditie met eigentijdse vormen van gemeente-zijn. Er is ruimte voor verschillende geloofsbeleving en we kennen zowel klassieke als moderne diensten. De gemeente is betrokken bij diaconale projecten in binnen- en buitenland.',
   },
   {
@@ -87,7 +98,7 @@ export const organizations: Organization[] = [
     hasParkingAvailable: false,
     hasRingloop: true,
     serviceTime: 'Zaterdag 19:00, Zondag 10:30',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop',
+    image: paxChristiImage,
     longDescription: 'De H. Bonaventurakerk, ook bekend als Pax Christi parochie, is al eeuwenlang een geestelijk thuis voor katholieken in Woerden. Het monumentale kerkgebouw in het centrum ademt geschiedenis en biedt rust in een drukke wereld. De parochie kent een actief vrijwilligersnetwerk en diverse werkgroepen. Iedereen is welkom om deel te nemen aan de sacramenten en het gemeenschapsleven.',
   },
   {
@@ -107,7 +118,7 @@ export const organizations: Organization[] = [
     hasParkingAvailable: false,
     hasRingloop: false,
     serviceTime: 'Zondag 10:00 (2x per maand)',
-    image: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=800&h=600&fit=crop',
+    image: lutherseImage,
     longDescription: 'De Lutherse Gemeente Woerden is een intieme gemeenschap waar iedereen elkaar kent. De lutherse liturgie, met haar nadruk op muziek en de sacramenten, staat centraal. Ondanks onze kleine omvang zijn we een actieve gemeente met regelmatige bijeenkomsten en een sterke oecumenische instelling. We vieren dienst in ons historische kerkje aan de Korte Oudegracht.',
   },
   {
@@ -127,7 +138,7 @@ export const organizations: Organization[] = [
     hasParkingAvailable: true,
     hasRingloop: true,
     serviceTime: 'Zondag 10:00',
-    image: 'https://images.unsplash.com/photo-1519491050282-cf00c82424b3?w=800&h=600&fit=crop',
+    image: hervnwImage,
     longDescription: 'De Hervormde Gemeente Noord+West is een open en gastvrije gemeenschap in het noorden van Woerden. We kennen een afwisselend programma met klassieke en eigentijdse diensten. Er is veel aandacht voor kinderen en jongeren met een actieve jeugdkerk en tienergroepen. De gemeente is betrokken bij diverse maatschappelijke initiatieven in de wijk.',
   },
   {
@@ -147,7 +158,7 @@ export const organizations: Organization[] = [
     hasParkingAvailable: false,
     hasRingloop: true,
     serviceTime: 'Zondag 10:00',
-    image: 'https://images.unsplash.com/photo-1545987796-200677ee1011?w=800&h=600&fit=crop',
+    image: petruskerkImage,
     longDescription: 'De Hervormde Gemeente Centrum-Oost kerkt in de monumentale Petruskerk, een prachtig middeleeuws kerkgebouw in het hart van Woerden. De eredienst wordt gekenmerkt door klassieke liturgie en orgelspel van hoog niveau. Tegelijkertijd is er ruimte voor vernieuwing en betrokkenheid. De gemeente kent veel actieve werkgroepen en is nauw verbonden met de lokale gemeenschap.',
   },
   {
@@ -167,7 +178,7 @@ export const organizations: Organization[] = [
     hasParkingAvailable: true,
     hasRingloop: false,
     serviceTime: 'Zondag 10:30',
-    image: 'https://images.unsplash.com/photo-1555992336-fb0d29498b13?w=800&h=600&fit=crop',
+    image: hetBakenImage,
     longDescription: 'Het Baken is een laagdrempelige, oecumenische gemeenschap waar iedereen welkom is, ongeacht achtergrond of geloofservaring. Onze diensten zijn informeel en interactief, met ruimte voor gesprek en ontmoeting. We hechten veel waarde aan gemeenschapsvorming en onderling contact. Ben je zoekend of nieuwsgierig? Je bent van harte welkom om eens binnen te lopen!',
   },
   {
@@ -187,7 +198,7 @@ export const organizations: Organization[] = [
     hasParkingAvailable: true,
     hasRingloop: false,
     serviceTime: 'Zondag 09:30',
-    image: 'https://images.unsplash.com/photo-1508450859948-4e04fabaa4ea?w=800&h=600&fit=crop',
+    image: nakImage,
     longDescription: 'De Nieuw-Apostolische Kerk Woerden is een warme, betrokken gemeente waar gemeenschapsgevoel en onderlinge zorg centraal staan. De eredienst volgt de nieuw-apostolische liturgie met veel aandacht voor muziek en het Woord. We zijn een hechte groep met regelmatige activiteiten door de week. Nieuwkomers worden hartelijk ontvangen.',
   },
   {
@@ -213,7 +224,7 @@ export function getOrganizationName(id: string): string {
 }
 
 export function getChurches(): Organization[] {
-  // Return all organizations that have denomination (excluding pure initiatives like Huis van Hoop without services)
+  // Return all organizations that have denomination and serviceTime (excluding pure initiatives like Huis van Hoop without services)
   return organizations.filter(org => org.denomination && org.serviceTime);
 }
 

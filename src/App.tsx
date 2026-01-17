@@ -12,6 +12,8 @@ import News from "./pages/News";
 import NewsDetail from "./pages/NewsDetail";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Churches from "./pages/Churches";
+import ChurchDetail from "./pages/ChurchDetail";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
@@ -32,6 +34,8 @@ const App = () => (
             <Route path="/aanmelden" element={<SubmitActivity />} />
             <Route path="/nieuws" element={<News />} />
             <Route path="/nieuws/:id" element={<NewsDetail />} />
+            <Route path="/kerken" element={<Churches />} />
+            <Route path="/kerken/:id" element={<ChurchDetail />} />
             <Route path="/over" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/auth" element={<Auth />} />

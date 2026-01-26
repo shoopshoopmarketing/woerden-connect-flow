@@ -7,6 +7,7 @@ import { getChurchById, getOrganizationById } from '@/data/organizations';
 import { getUpcomingActivities } from '@/data/activities';
 import { ActivityCard } from '@/components/ActivityCard';
 import { denominationLabels, sizeLabels, styleLabels } from '@/data/types';
+import { ChurchBuddyDialog } from '@/components/ChurchBuddyDialog';
 
 export default function ChurchDetail() {
   const { id } = useParams<{ id: string }>();
@@ -152,6 +153,20 @@ export default function ChurchDetail() {
               </div>
             </div>
           )}
+
+          {/* Church Buddy CTA */}
+          <div className="bg-gradient-to-r from-primary/10 to-secondary/30 rounded-xl p-6 mb-8 text-center">
+            <h2 className="font-serif text-xl font-medium text-foreground mb-2">
+              Voor het eerst naar deze kerk?
+            </h2>
+            <p className="text-muted-foreground mb-4">
+              Vraag een kerkmaatje! Iemand die met je meegaat en je wegwijs maakt.
+            </p>
+            <ChurchBuddyDialog 
+              churchId={church.id} 
+              churchName={church.shortName || church.name} 
+            />
+          </div>
 
           {/* Website Link */}
           {church.website && (

@@ -52,6 +52,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const checkAdminRole = async (userId: string) => {
+    // MOCKUP MODE: All logged-in users are admins for demo purposes
+    // In production, uncomment the database check below
+    setIsAdmin(true);
+    
+    /* Production code:
     try {
       const { data, error } = await supabase
         .from('user_roles')
@@ -68,6 +73,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch {
       setIsAdmin(false);
     }
+    */
   };
 
   const signUp = async (email: string, password: string) => {

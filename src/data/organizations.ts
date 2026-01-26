@@ -212,6 +212,25 @@ export const organizations: Organization[] = [
     address: 'Rijnstraat 10, 3441 BP Woerden',
     neighborhood: 'Woerden-Centrum',
   },
+  {
+    id: 'lighthouse',
+    name: 'Lighthouse Woerden',
+    shortName: 'Lighthouse',
+    website: 'https://www.lighthousewoerden.nl',
+    description: 'Interkerkelijk jongerencentrum voor jeugddiensten en jongerenactiviteiten.',
+    denomination: 'oecumenisch',
+    size: 'middelgroot',
+    serviceStyle: 'modern',
+    neighborhood: 'Woerden-West',
+    address: 'Havenstraat 12, 3441 BH Woerden',
+    hasChildcare: false,
+    hasYouthGroup: true,
+    hasAccessibility: true,
+    hasParkingAvailable: true,
+    hasRingloop: false,
+    serviceTime: 'Elke 2e zondag 19:00',
+    longDescription: 'Lighthouse Woerden is een bruisend interkerkelijk jongerencentrum waar jongeren van 12-25 jaar samenkomen. Elke tweede zondag van de maand is er een jeugddienst met moderne worship, een relevante spreker en ontmoeting. Daarnaast organiseren we youth worship nights, gamedays en andere activiteiten. Bij Lighthouse vind je een plek om je geloof te ontdekken en te groeien, samen met leeftijdsgenoten.',
+  },
 ];
 
 export function getOrganizationById(id: string): Organization | undefined {

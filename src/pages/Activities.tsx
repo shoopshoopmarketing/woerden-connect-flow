@@ -1,15 +1,31 @@
 import { useState, useMemo } from 'react';
-import { isToday, isThisWeek, isThisMonth } from 'date-fns';
+import { isToday, isThisWeek, isThisMonth, getMonth } from 'date-fns';
 import { Layout } from '@/components/layout';
 import { ActivityCard } from '@/components/ActivityCard';
 import { TimeFilterBar, FilterSidebar, TimeFilter } from '@/components/FilterBar';
 import { activities } from '@/data/activities';
-import { ActivityType } from '@/data/types';
+import { ActivityType, TargetAudience } from '@/data/types';
+
+const monthNameToIndex: Record<string, number> = {
+  januari: 0,
+  februari: 1,
+  maart: 2,
+  april: 3,
+  mei: 4,
+  juni: 5,
+  juli: 6,
+  augustus: 7,
+  september: 8,
+  oktober: 9,
+  november: 10,
+  december: 11,
+};
 
 export default function Activities() {
   const [selectedTime, setSelectedTime] = useState<TimeFilter>('all');
   const [selectedTypes, setSelectedTypes] = useState<ActivityType[]>([]);
   const [selectedOrganizations, setSelectedOrganizations] = useState<string[]>([]);
+  const [selectedAudiences, setSelectedAudiences] = useState<TargetAudience[]>([]);
 
   const filteredActivities = useMemo(() => {
     return activities.filter(activity => {
@@ -17,6 +33,11 @@ export default function Activities() {
       if (selectedTime === 'today' && !isToday(activity.date)) return false;
       if (selectedTime === 'week' && !isThisWeek(activity.date)) return false;
       if (selectedTime === 'month' && !isThisMonth(activity.date)) return false;
+      
+      // Month filter
+      if (monthNameToIndex[selectedTime] !== undefined) {
+        if (getMonth(activity.date) !== monthNameToIndex[selectedTime]) return false;
+      }
 
       // Type filter
       if (selectedTypes.length > 0 && !selectedTypes.includes(activity.type)) return false;
@@ -24,9 +45,18 @@ export default function Activities() {
       // Organization filter
       if (selectedOrganizations.length > 0 && !selectedOrganizations.includes(activity.organizationId)) return false;
 
+      // Audience filter
+      if (selectedAudiences.length > 0) {
+        if (!activity.targetAudience || !activity.targetAudience.some(a => selectedAudiences.includes(a))) {
+          return false;
+        }
+      }
+
       return true;
     }).sort((a, b) => a.date.getTime() - b.date.getTime());
-  }, [selectedTime, selectedTypes, selectedOrganizations]);
+  }, [selectedTime, selectedTypes, selectedOrganizations, selectedAudiences]);
+
+  const activeFilterCount = selectedTypes.length + selectedOrganizations.length + selectedAudiences.length;
 
   return (
     <Layout>
@@ -52,8 +82,10 @@ export default function Activities() {
               <FilterSidebar
                 selectedTypes={selectedTypes}
                 selectedOrganizations={selectedOrganizations}
+                selectedAudiences={selectedAudiences}
                 onTypeChange={setSelectedTypes}
                 onOrganizationChange={setSelectedOrganizations}
+                onAudienceChange={setSelectedAudiences}
               />
             </aside>
 
@@ -80,9 +112,9 @@ export default function Activities() {
 
           {/* Mobile: Show filter count if active */}
           <div className="lg:hidden fixed bottom-4 right-4">
-            {(selectedTypes.length > 0 || selectedOrganizations.length > 0) && (
+            {activeFilterCount > 0 && (
               <div className="bg-primary text-primary-foreground rounded-full px-4 py-2 text-sm shadow-lg">
-                {selectedTypes.length + selectedOrganizations.length} filter{selectedTypes.length + selectedOrganizations.length !== 1 ? 's' : ''} actief
+                {activeFilterCount} filter{activeFilterCount !== 1 ? 's' : ''} actief
               </div>
             )}
           </div>

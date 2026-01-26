@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { getActivityById } from '@/data/activities';
 import { getOrganizationById } from '@/data/organizations';
 import { activityTypeLabels, activityTypeColors } from '@/data/types';
+import { ActivityReviews, SocialShareButtons } from '@/components/ActivityReviews';
 
 export default function ActivityDetail() {
   const { id } = useParams<{ id: string }>();
@@ -28,6 +29,7 @@ export default function ActivityDetail() {
 
   const organization = getOrganizationById(activity.organizationId);
   const formattedDate = format(activity.date, 'EEEE d MMMM yyyy', { locale: nl });
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
 
   return (
     <Layout>
@@ -105,9 +107,14 @@ export default function ActivityDetail() {
             </div>
           )}
 
+          {/* Social Share */}
+          <div className="mb-8">
+            <SocialShareButtons title={activity.title} url={shareUrl} />
+          </div>
+
           {/* Organization */}
           {organization && (
-            <div className="border-t border-border pt-6">
+            <div className="border-t border-border pt-6 mb-8">
               <p className="text-sm text-muted-foreground mb-1">Georganiseerd door</p>
               <p className="font-medium text-foreground">{organization.name}</p>
               {organization.website && (
@@ -117,6 +124,11 @@ export default function ActivityDetail() {
               )}
             </div>
           )}
+
+          {/* Reviews Section */}
+          <div className="border-t border-border pt-8">
+            <ActivityReviews activityId={activity.id} />
+          </div>
         </div>
       </article>
     </Layout>

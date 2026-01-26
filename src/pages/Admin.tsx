@@ -44,17 +44,17 @@ export default function Admin() {
   const [loadingActivities, setLoadingActivities] = useState(true);
   const [processingId, setProcessingId] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!isLoading && !user) {
-      navigate('/auth');
-    }
-  }, [user, isLoading, navigate]);
+  // MOCKUP MODE: Skip auth redirect for demo purposes
+  // useEffect(() => {
+  //   if (!isLoading && !user) {
+  //     navigate('/auth');
+  //   }
+  // }, [user, isLoading, navigate]);
 
+  // MOCKUP MODE: Always fetch activities for demo
   useEffect(() => {
-    if (user && isAdmin) {
-      fetchActivities();
-    }
-  }, [user, isAdmin]);
+    fetchActivities();
+  }, []);
 
   const fetchActivities = async () => {
     setLoadingActivities(true);
@@ -119,40 +119,8 @@ export default function Admin() {
     rejected: activities.filter(a => a.status === 'rejected').length,
   };
 
-  if (isLoading) {
-    return (
-      <Layout>
-        <section className="section-padding">
-          <div className="container-page text-center">
-            <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto" />
-          </div>
-        </section>
-      </Layout>
-    );
-  }
-
-  if (!isAdmin) {
-    return (
-      <Layout>
-        <section className="section-padding">
-          <div className="container-page max-w-lg text-center">
-            <div className="bg-destructive/10 rounded-xl p-8">
-              <XCircle className="w-16 h-16 text-destructive mx-auto mb-4" />
-              <h1 className="font-serif text-2xl font-medium text-foreground mb-2">
-                Geen toegang
-              </h1>
-              <p className="text-muted-foreground mb-6">
-                Je hebt geen beheerdersrechten om deze pagina te bekijken.
-              </p>
-              <Button onClick={() => navigate('/')}>
-                Terug naar home
-              </Button>
-            </div>
-          </div>
-        </section>
-      </Layout>
-    );
-  }
+  // MOCKUP MODE: Skip loading and admin check for demo purposes
+  // In production, uncomment the blocks below
 
   return (
     <Layout>

@@ -3,7 +3,7 @@ import { Activity } from './types';
 // ============= DATE HELPERS =============
 
 // Get a specific date in a month (0-indexed months, 1-indexed days)
-const getDateInMonth = (month: number, day: number, year: number = 2025): Date => {
+const getDateInMonth = (month: number, day: number, year: number = 2026): Date => {
   return new Date(year, month, day);
 };
 
@@ -52,6 +52,8 @@ const activities: Activity[] = [];
 
 // ============= ZONDAGMORGENDIENSTEN (wekelijks, hele jaar) =============
 
+const currentYear = 2026;
+
 const churchServices = [
   { orgId: 'cama', name: 'Cama Parousia', time: '10:00', location: 'Cama Parousia', address: 'Industrieweg 15, Woerden', style: 'modern' },
   { orgId: 'rehoboth', name: 'Rehobothkerk', time: '09:30', location: 'Rehobothkerk', address: 'Rembrandtlaan 2, Woerden', style: 'traditioneel' },
@@ -66,7 +68,7 @@ const churchServices = [
 
 // Generate Sunday services for each month
 for (let month = 0; month < 12; month++) {
-  const sundays = getSundaysInMonth(2025, month);
+  const sundays = getSundaysInMonth(currentYear, month);
   
   sundays.forEach((sunday, weekIndex) => {
     // Skip Lutherse on some weeks (only 2x per month)
@@ -99,7 +101,7 @@ for (let month = 0; month < 12; month++) {
 // ============= AVONDDIENSTEN (Hervormd N+W en C-O) =============
 
 for (let month = 0; month < 12; month++) {
-  const sundays = getSundaysInMonth(2025, month);
+  const sundays = getSundaysInMonth(currentYear, month);
   
   sundays.forEach(sunday => {
     ['hervnw', 'hervco'].forEach(orgId => {
@@ -127,7 +129,7 @@ for (let month = 0; month < 12; month++) {
 // ============= JEUGDDIENSTEN LIGHTHOUSE (maandelijks, 2e zondag) =============
 
 for (let month = 0; month < 12; month++) {
-  const secondSunday = getNthWeekday(2025, month, 0, 2);
+  const secondSunday = getNthWeekday(currentYear, month, 0, 2);
   
   activities.push({
     id: generateId(),
@@ -162,7 +164,7 @@ for (let month = 0; month < 12; month++) {
   // Skip zomervakantie (juli en augustus)
   if (month === 6 || month === 7) continue;
   
-  const fridays = getFridaysInMonth(2025, month);
+  const fridays = getFridaysInMonth(currentYear, month);
   
   fridays.forEach((friday, weekIndex) => {
     kinderclubKerken.forEach(kerk => {
@@ -192,7 +194,7 @@ for (let month = 0; month < 12; month++) {
 for (let month = 0; month < 12; month++) {
   if (month === 6 || month === 7) continue;
   
-  const fridays = getFridaysInMonth(2025, month);
+  const fridays = getFridaysInMonth(currentYear, month);
   
   fridays.forEach(friday => {
     activities.push({
@@ -566,7 +568,7 @@ activities.push({
 // ============= GAMENIGHT JONGEREN (maandelijks) =============
 
 for (let month = 0; month < 12; month++) {
-  const lastFriday = getFridaysInMonth(2025, month).slice(-1)[0];
+  const lastFriday = getFridaysInMonth(currentYear, month).slice(-1)[0];
   
   activities.push({
     id: generateId(),
@@ -619,7 +621,7 @@ for (let month = 0; month < 12; month++) {
 // ============= SENIORENMIDDAGEN (maandelijks) =============
 
 for (let month = 0; month < 12; month++) {
-  const secondWednesday = getNthWeekday(2025, month, 3, 2);
+  const secondWednesday = getNthWeekday(currentYear, month, 3, 2);
   
   activities.push({
     id: generateId(),
@@ -670,7 +672,7 @@ for (let month = 0; month < 12; month++) {
 // ============= ZANGMIDDAG SENIOREN (maandelijks) =============
 
 for (let month = 0; month < 12; month++) {
-  const thirdThursday = getNthWeekday(2025, month, 4, 3);
+  const thirdThursday = getNthWeekday(currentYear, month, 4, 3);
   
   activities.push({
     id: generateId(),
@@ -714,7 +716,7 @@ activities.push({
 // ============= TAIZÉ-AVONDGEBED (maandelijks) =============
 
 for (let month = 0; month < 12; month++) {
-  const firstThursday = getNthWeekday(2025, month, 4, 1);
+  const firstThursday = getNthWeekday(currentYear, month, 4, 1);
   
   activities.push({
     id: generateId(),
@@ -881,7 +883,7 @@ activities.push({
 for (let month = 0; month < 12; month++) {
   if (month === 7) continue; // Augustus vakantie
   
-  const lastSaturday = getSundaysInMonth(2025, month).slice(-1)[0];
+  const lastSaturday = getSundaysInMonth(currentYear, month).slice(-1)[0];
   lastSaturday.setDate(lastSaturday.getDate() - 1); // Zaterdag
   
   activities.push({
@@ -974,7 +976,7 @@ for (let month = 0; month < 12; month++) {
 for (let month = 0; month < 12; month++) {
   if (month === 6 || month === 7) continue;
   
-  const firstTuesday = getNthWeekday(2025, month, 2, 1);
+  const firstTuesday = getNthWeekday(currentYear, month, 2, 1);
   
   activities.push({
     id: generateId(),
@@ -998,7 +1000,7 @@ for (let month = 0; month < 12; month++) {
 // ============= MANNENONTBIJT =============
 
 for (let month = 0; month < 12; month++) {
-  const lastSaturday = getSundaysInMonth(2025, month).slice(-1)[0];
+  const lastSaturday = getSundaysInMonth(currentYear, month).slice(-1)[0];
   lastSaturday.setDate(lastSaturday.getDate() - 1);
   
   activities.push({
@@ -1077,7 +1079,7 @@ for (let month = 0; month < 12; month++) {
 // ============= WANDELEN & PRATEN =============
 
 for (let month = 0; month < 12; month++) {
-  const thirdSaturday = getNthWeekday(2025, month, 6, 3);
+  const thirdSaturday = getNthWeekday(currentYear, month, 6, 3);
   
   activities.push({
     id: generateId(),
@@ -1102,7 +1104,7 @@ for (let month = 0; month < 12; month++) {
 for (let month = 0; month < 12; month++) {
   if (month === 6 || month === 7) continue;
   
-  const lastWednesday = getNthWeekday(2025, month, 3, 4);
+  const lastWednesday = getNthWeekday(currentYear, month, 3, 4);
   
   activities.push({
     id: generateId(),

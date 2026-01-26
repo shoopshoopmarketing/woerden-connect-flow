@@ -196,6 +196,21 @@ export default function Auth() {
               </Button>
             </form>
 
+            {/* Demo mode button for mockup */}
+            <div className="mt-4 pt-4 border-t border-border">
+              <Button 
+                variant="secondary" 
+                size="lg" 
+                className="w-full"
+                onClick={() => navigate('/beheer')}
+              >
+                🎭 Demo modus - Direct naar beheer
+              </Button>
+              <p className="text-xs text-muted-foreground text-center mt-2">
+                Voor presentatiedoeleinden (geen login vereist)
+              </p>
+            </div>
+
             <div className="mt-6 text-center">
               <button
                 type="button"

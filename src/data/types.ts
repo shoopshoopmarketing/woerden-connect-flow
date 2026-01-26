@@ -43,6 +43,8 @@ export interface Organization {
   longDescription?: string;
 }
 
+export type TargetAudience = 'kinderen' | 'jongeren' | 'volwassenen' | 'ouderen';
+
 export interface Activity {
   id: string;
   title: string;
@@ -62,6 +64,7 @@ export interface Activity {
   isFeatured?: boolean;
   isRecurring?: boolean;
   recurringInfo?: string;
+  targetAudience?: TargetAudience[];
   // Terugblik velden
   retrospective?: string;
   retrospectiveImages?: string[];
@@ -146,4 +149,11 @@ export const styleLabels: Record<ServiceStyle, string> = {
   traditioneel: 'Traditioneel',
   modern: 'Modern',
   gemengd: 'Gemengd',
+};
+
+export const targetAudienceLabels: Record<TargetAudience, string> = {
+  kinderen: 'Kinderen (0-12)',
+  jongeren: 'Jongeren (12-25)',
+  volwassenen: 'Volwassenen',
+  ouderen: 'Senioren (65+)',
 };

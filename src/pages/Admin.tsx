@@ -2,34 +2,38 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout } from '@/components/layout';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
+import { AdminStats } from '@/components/admin/AdminStats';
+import { AdminActivityList } from '@/components/admin/AdminActivityList';
 import { 
-  CheckCircle, 
   XCircle, 
-  Clock, 
-  Calendar, 
-  MapPin, 
-  User,
-  Mail,
-  Building
+  LayoutDashboard,
+  Calendar,
+  RefreshCw,
+  Settings
 } from 'lucide-react';
 
 interface SubmittedActivity {
   id: string;
   title: string;
   description: string;
+  long_description?: string;
   date: string;
   time: string;
+  end_time?: string;
   location: string;
+  address?: string;
   activity_type: string;
   organization_name: string;
   contact_person: string;
   contact_email: string;
   status: string;
   created_at: string;
+  for_who?: string;
+  what_to_expect?: string;
 }
 
 export default function Admin() {
@@ -53,6 +57,7 @@ export default function Admin() {
   }, [user, isAdmin]);
 
   const fetchActivities = async () => {
+    setLoadingActivities(true);
     try {
       const { data, error } = await supabase
         .from('submitted_activities')
@@ -107,17 +112,11 @@ export default function Admin() {
     }
   };
 
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case 'pending':
-        return <Badge variant="secondary" className="bg-yellow-100 text-yellow-800"><Clock className="w-3 h-3 mr-1" /> Wachtend</Badge>;
-      case 'approved':
-        return <Badge className="bg-green-100 text-green-800"><CheckCircle className="w-3 h-3 mr-1" /> Goedgekeurd</Badge>;
-      case 'rejected':
-        return <Badge variant="destructive"><XCircle className="w-3 h-3 mr-1" /> Afgewezen</Badge>;
-      default:
-        return <Badge variant="secondary">{status}</Badge>;
-    }
+  const stats = {
+    total: activities.length,
+    pending: activities.filter(a => a.status === 'pending').length,
+    approved: activities.filter(a => a.status === 'approved').length,
+    rejected: activities.filter(a => a.status === 'rejected').length,
   };
 
   if (isLoading) {
@@ -125,7 +124,7 @@ export default function Admin() {
       <Layout>
         <section className="section-padding">
           <div className="container-page text-center">
-            <p className="text-muted-foreground">Laden...</p>
+            <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto" />
           </div>
         </section>
       </Layout>
@@ -159,102 +158,133 @@ export default function Admin() {
     <Layout>
       <section className="section-padding">
         <div className="container-page">
-          <div className="mb-8">
-            <h1 className="font-serif text-3xl sm:text-4xl font-medium text-foreground mb-2">
-              Beheerderspaneel
-            </h1>
-            <p className="text-muted-foreground">
-              Bekijk en beheer ingediende activiteiten.
-            </p>
-          </div>
-
-          {loadingActivities ? (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">Activiteiten laden...</p>
-            </div>
-          ) : activities.length === 0 ? (
-            <div className="bg-muted rounded-xl p-12 text-center">
-              <Clock className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-              <h2 className="font-serif text-xl font-medium text-foreground mb-2">
-                Geen activiteiten ingediend
-              </h2>
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            <div>
+              <h1 className="font-serif text-3xl sm:text-4xl font-medium text-foreground mb-1">
+                Backoffice
+              </h1>
               <p className="text-muted-foreground">
-                Er zijn nog geen activiteiten ingediend door organisaties.
+                Beheer activiteiten en instellingen voor Geloof & Cultuur Woerden.
               </p>
             </div>
-          ) : (
-            <div className="space-y-4">
-              {activities.map((activity) => (
-                <div 
-                  key={activity.id}
-                  className="bg-card border border-border rounded-xl p-6"
-                >
-                  <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h3 className="font-serif text-lg font-medium text-foreground">
-                          {activity.title}
-                        </h3>
-                        {getStatusBadge(activity.status)}
-                      </div>
-                      
-                      <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-                        {activity.description}
-                      </p>
+            <Button 
+              variant="outline" 
+              onClick={fetchActivities}
+              disabled={loadingActivities}
+            >
+              <RefreshCw className={`w-4 h-4 mr-2 ${loadingActivities ? 'animate-spin' : ''}`} />
+              Vernieuwen
+            </Button>
+          </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                        <div className="flex items-center gap-2 text-muted-foreground">
-                          <Calendar className="w-4 h-4" />
-                          {new Date(activity.date).toLocaleDateString('nl-NL')} om {activity.time}
-                        </div>
-                        <div className="flex items-center gap-2 text-muted-foreground">
-                          <MapPin className="w-4 h-4" />
-                          {activity.location}
-                        </div>
-                        <div className="flex items-center gap-2 text-muted-foreground">
-                          <Building className="w-4 h-4" />
-                          {activity.organization_name}
-                        </div>
-                        <div className="flex items-center gap-2 text-muted-foreground">
-                          <User className="w-4 h-4" />
-                          {activity.contact_person}
-                        </div>
-                        <div className="flex items-center gap-2 text-muted-foreground col-span-full">
-                          <Mail className="w-4 h-4" />
-                          <a href={`mailto:${activity.contact_email}`} className="text-primary hover:underline">
-                            {activity.contact_email}
-                          </a>
-                        </div>
-                      </div>
-                    </div>
+          {/* Stats */}
+          <AdminStats {...stats} />
 
-                    {activity.status === 'pending' && (
-                      <div className="flex gap-2 lg:flex-col">
-                        <Button
-                          size="sm"
-                          onClick={() => updateStatus(activity.id, 'approved')}
-                          disabled={processingId === activity.id}
-                          className="bg-green-600 hover:bg-green-700"
-                        >
-                          <CheckCircle className="w-4 h-4 mr-1" />
-                          Goedkeuren
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="destructive"
-                          onClick={() => updateStatus(activity.id, 'rejected')}
-                          disabled={processingId === activity.id}
-                        >
-                          <XCircle className="w-4 h-4 mr-1" />
-                          Afwijzen
-                        </Button>
-                      </div>
-                    )}
+          {/* Tabs */}
+          <Tabs defaultValue="activities" className="space-y-6">
+            <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:inline-flex">
+              <TabsTrigger value="dashboard" className="gap-2">
+                <LayoutDashboard className="w-4 h-4" />
+                <span className="hidden sm:inline">Dashboard</span>
+              </TabsTrigger>
+              <TabsTrigger value="activities" className="gap-2">
+                <Calendar className="w-4 h-4" />
+                <span className="hidden sm:inline">Activiteiten</span>
+              </TabsTrigger>
+              <TabsTrigger value="settings" className="gap-2">
+                <Settings className="w-4 h-4" />
+                <span className="hidden sm:inline">Instellingen</span>
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="dashboard">
+              <div className="bg-card border border-border rounded-xl p-6">
+                <h2 className="font-serif text-xl font-medium mb-4">Welkom in de backoffice</h2>
+                <p className="text-muted-foreground mb-6">
+                  Hier kun je ingediende activiteiten bekijken en goedkeuren. 
+                  Momenteel wachten er <strong>{stats.pending}</strong> activiteiten op goedkeuring.
+                </p>
+                
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="bg-muted rounded-lg p-4">
+                    <h3 className="font-medium mb-2">Snelle acties</h3>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li>• Bekijk wachtende activiteiten in het tabblad "Activiteiten"</li>
+                      <li>• Keur activiteiten goed of wijs ze af</li>
+                      <li>• Bekijk details voordat je een beslissing neemt</li>
+                    </ul>
+                  </div>
+                  <div className="bg-muted rounded-lg p-4">
+                    <h3 className="font-medium mb-2">Recente statistieken</h3>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li>• Totaal ingediend: {stats.total}</li>
+                      <li>• Goedkeuringspercentage: {stats.total > 0 ? Math.round((stats.approved / stats.total) * 100) : 0}%</li>
+                      <li>• Wachttijd gemiddeld: &lt; 2 werkdagen</li>
+                    </ul>
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="activities">
+              <AdminActivityList
+                activities={activities}
+                onApprove={(id) => updateStatus(id, 'approved')}
+                onReject={(id) => updateStatus(id, 'rejected')}
+                processingId={processingId}
+                isLoading={loadingActivities}
+              />
+            </TabsContent>
+
+            <TabsContent value="settings">
+              <div className="bg-card border border-border rounded-xl p-6">
+                <h2 className="font-serif text-xl font-medium mb-4">Instellingen</h2>
+                <p className="text-muted-foreground mb-6">
+                  Beheer hier de instellingen voor het platform. 
+                  Deze functionaliteit wordt later uitgebreid.
+                </p>
+                
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-4 bg-muted rounded-lg">
+                    <div>
+                      <h3 className="font-medium">E-mail notificaties</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Ontvang een e-mail bij nieuwe aanmeldingen
+                      </p>
+                    </div>
+                    <span className="text-xs bg-secondary text-secondary-foreground px-2 py-1 rounded">
+                      Binnenkort
+                    </span>
+                  </div>
+                  
+                  <div className="flex items-center justify-between p-4 bg-muted rounded-lg">
+                    <div>
+                      <h3 className="font-medium">Automatische goedkeuring</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Keur activiteiten van bekende organisaties automatisch goed
+                      </p>
+                    </div>
+                    <span className="text-xs bg-secondary text-secondary-foreground px-2 py-1 rounded">
+                      Binnenkort
+                    </span>
+                  </div>
+                  
+                  <div className="flex items-center justify-between p-4 bg-muted rounded-lg">
+                    <div>
+                      <h3 className="font-medium">Beheerders toevoegen</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Voeg nieuwe beheerders toe aan het platform
+                      </p>
+                    </div>
+                    <span className="text-xs bg-secondary text-secondary-foreground px-2 py-1 rounded">
+                      Binnenkort
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </section>
     </Layout>

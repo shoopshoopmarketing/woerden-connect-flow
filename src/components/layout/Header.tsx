@@ -164,20 +164,42 @@ export function Header() {
         {isMenuOpen && (
           <nav className="md:hidden py-4 border-t border-border">
             <div className="flex flex-col gap-1">
-              {navItems.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`px-4 py-3 rounded-lg text-base font-medium transition-colors ${
-                    location.pathname === item.path
-                      ? 'bg-primary text-primary-foreground'
-                      : 'text-foreground hover:bg-muted'
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ))}
+              {navItems.map((item) => 
+                item.children ? (
+                  <div key={item.path} className="flex flex-col">
+                    <span className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                      {item.label}
+                    </span>
+                    {item.children.map((child) => (
+                      <Link
+                        key={child.path}
+                        to={child.path}
+                        onClick={() => setIsMenuOpen(false)}
+                        className={`px-6 py-3 rounded-lg text-base font-medium transition-colors ${
+                          location.pathname === child.path
+                            ? 'bg-primary text-primary-foreground'
+                            : 'text-foreground hover:bg-muted'
+                        }`}
+                      >
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
+                ) : (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`px-4 py-3 rounded-lg text-base font-medium transition-colors ${
+                      location.pathname === item.path
+                        ? 'bg-primary text-primary-foreground'
+                        : 'text-foreground hover:bg-muted'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                )
+              )}
               <Link 
                 to="/aanmelden" 
                 onClick={() => setIsMenuOpen(false)}

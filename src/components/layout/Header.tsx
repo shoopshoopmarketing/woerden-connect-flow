@@ -1,13 +1,20 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, LogIn, LogOut, Settings } from 'lucide-react';
-import { useState } from 'react';
+import { Menu, X, LogIn, LogOut, Settings, ChevronDown } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import logo from '@/assets/logo-raad-van-kerken.png';
 
 const navItems = [
   { label: 'Home', path: '/' },
-  { label: 'Activiteiten', path: '/activiteiten' },
+  { 
+    label: 'Activiteiten', 
+    path: '/activiteiten',
+    children: [
+      { label: 'Overzicht', path: '/activiteiten' },
+      { label: 'Agenda', path: '/agenda' },
+    ],
+  },
   { label: 'Kerken', path: '/kerken' },
   { label: 'Nieuws', path: '/nieuws' },
   { label: 'Over ons', path: '/over' },

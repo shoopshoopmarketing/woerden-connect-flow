@@ -63,20 +63,54 @@ export function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  location.pathname === item.path
-                    ? 'bg-primary text-primary-foreground'
-                    : 'text-foreground hover:bg-muted'
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
+          <nav className="hidden md:flex items-center gap-1" ref={dropdownRef}>
+            {navItems.map((item) => 
+              item.children ? (
+                <div key={item.path} className="relative">
+                  <button
+                    onClick={() => setOpenDropdown(openDropdown === item.path ? null : item.path)}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-flex items-center gap-1 ${
+                      location.pathname === item.path || location.pathname === '/agenda'
+                        ? 'bg-primary text-primary-foreground'
+                        : 'text-foreground hover:bg-muted'
+                    }`}
+                  >
+                    {item.label}
+                    <ChevronDown className={`w-3 h-3 transition-transform ${openDropdown === item.path ? 'rotate-180' : ''}`} />
+                  </button>
+                  {openDropdown === item.path && (
+                    <div className="absolute top-full left-0 mt-1 bg-card border border-border rounded-lg shadow-lg py-1 min-w-[160px] z-50">
+                      {item.children.map((child) => (
+                        <Link
+                          key={child.path}
+                          to={child.path}
+                          onClick={() => setOpenDropdown(null)}
+                          className={`block px-4 py-2 text-sm transition-colors ${
+                            location.pathname === child.path
+                              ? 'bg-primary/10 text-primary font-medium'
+                              : 'text-foreground hover:bg-muted'
+                          }`}
+                        >
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    location.pathname === item.path
+                      ? 'bg-primary text-primary-foreground'
+                      : 'text-foreground hover:bg-muted'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
             <Link to="/aanmelden" className="ml-2">
               <Button size="sm" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                 Activiteit aanmelden

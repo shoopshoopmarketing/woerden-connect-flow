@@ -17,6 +17,7 @@ import ChurchDetail from "./pages/ChurchDetail";
 import Volunteers from "./pages/Volunteers";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
+import Agenda from "./pages/Agenda";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/activiteiten" element={<Activities />} />
             <Route path="/activiteiten/:id" element={<ActivityDetail />} />
             <Route path="/aanmelden" element={<SubmitActivity />} />
+            <Route path="/agenda" element={<Agenda />} />
             <Route path="/nieuws" element={<News />} />
             <Route path="/nieuws/:id" element={<NewsDetail />} />
             <Route path="/kerken" element={<Churches />} />
